@@ -1,6 +1,7 @@
 #define  _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
+#
 #include<time.h>
 
 //1.定义并初始化一个字符型的棋盘，尺寸为3*3，设定玩家落子为 "x",电脑落子为"o"
@@ -47,6 +48,7 @@ void PlayerMove() {
 	//首先提示玩家落子,并取得玩家所落位置
 	int row = 0;
 	int col = 0;
+	Print();
 	printf("玩家落子!\n");
 	while(1) {
 		printf("请输入一组坐标(row,col):");
@@ -65,7 +67,7 @@ void PlayerMove() {
 		}
 		//如果落子位置合法则在该位置上放'x'
 		g_board[row][col] = 'x';
-		Print();
+		//Print();
 		break;
 	}
 }
@@ -82,19 +84,20 @@ void ComputerMove() {
 			continue;
 		}
 		g_board[row][col] = 'o';
-		Print();
 		break;
 	}
 }
-//判定棋盘是否满了，若满了，返回1；若没满，返回0。 
-char IsFull() {
+
+//判定棋盘是否满了，若满了，返回1；若没满，返回0。
+int IsFull() {
 	for (int row = 0; row < ROW; ++row) {
 		for (int col = 0; col < COL; ++col) {
 			if (g_board[row][col] == ' ') {
 				return 0;
-			} else return 1;
+			}
 		}
 	}
+	return 1;
 }
 
 //设定玩家胜利返回'x'
@@ -127,16 +130,17 @@ char CheckWinner() {	//返回当前棋盘的胜负情况
 	}
 	if (IsFull()) {
 		return 'h';
-	} else {
+	}
+	else {
 		return ' ';
-	 }
+	}
 
 }
 
 int main() {
 	srand((unsigned int)time(0));
 	Init();	//初始化棋盘
-	Print();	//打印棋盘
+	//Print();	//打印棋盘
 	char winner = '\0';	//初始化胜者为0
 	while(1) {
 		PlayerMove();	//玩家落子
@@ -149,18 +153,18 @@ int main() {
 		if (winner != ' ') {	//结束则跳出
 			break;
 		}
-		if(winner == 'x') {
-			printf("你胜利了!");
-			break;
-		} else if (winner == 'o') {
-			printf("电脑胜利！");
-			break;
-		}
-		else if (winner == 'h') {
-			printf("和棋！你和电脑打平!");
-			break;
-		}
+		system("cls");
 	}
-
+	Print();
+	if (winner == 'x') {
+		printf("你胜利了!\n");
+	}
+	else if (winner == 'o') {
+		printf("电脑胜利！\n");
+	}
+	else if (winner == 'h') {
+		printf("和棋！你和电脑打平!\n");
+	}
+	system("pause");
 	return 0;
 }
